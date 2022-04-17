@@ -14,8 +14,8 @@ public class FindingElements {
     public static void main(String[] args) {
         WebDriverManager.edgedriver().setup();
         driver = new EdgeDriver();
-        driver.get("file://D:\\work\\Automation\\SiteProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
         driver.manage().window().maximize();
+        driver.get("file://D:\\work\\Automation\\SiteProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
         getById();
         getByName();
         getByClass();

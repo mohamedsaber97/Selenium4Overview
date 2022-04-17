@@ -12,6 +12,7 @@ public class VisitingSites {
     public static void main(String[] args) {
         WebDriverManager.edgedriver().setup();
         driver = new EdgeDriver();
+        driver.manage().window().maximize();
         getPage();
         getFile();
         getSize();
@@ -25,14 +26,12 @@ public class VisitingSites {
     //open any web page with url
     public static void getPage() {
         driver.get("https://qacart.com");
-        driver.manage().window().maximize();
         driver.quit();
     }
 
     //open any local file with absolute path
     public static void getFile() {
         driver.get("file://D:\\work\\Automation\\SiteProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
-        driver.manage().window().maximize();
         driver.quit();
     }
 
