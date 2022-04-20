@@ -3,6 +3,7 @@ package advanced;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
@@ -10,14 +11,16 @@ import java.time.Duration;
 public class BrowserInteractions {
     public static WebDriver driver;
     public static JavascriptExecutor js;
+    public static Actions actions;
 
     public static void main(String[] args) throws InterruptedException {
         WebDriverManager.edgedriver().setup();
         driver = new EdgeDriver();
         js = (JavascriptExecutor) driver; //to define java script executor
+        actions = new Actions(driver); //to define actions
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); //to wait 5 seconds for searching element
-        driver.get("file://D:\\IntellijProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
+        driver.get("file://D:\\work\\Automation\\SiteProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
         sendAndClick();
         selectCheckBox();
         selectDropdown();
@@ -25,7 +28,10 @@ public class BrowserInteractions {
         checkEnable();
         checkSelect();
         getAllData();
-        Thread.sleep(5000); //to wait 5 seconds
+        rightDoubleClick();
+        moveToElement();
+        dragAndDrop();
+        Thread.sleep(5000); //to wait 5 seconds before quit
         driver.quit();
     }
 
@@ -40,6 +46,7 @@ public class BrowserInteractions {
         Thread.sleep(5000);
         WebElement send = driver.findElement(By.xpath("//*[text() = 'Sign in']"));
         js.executeScript("arguments[0].click();", send); //to click on un clickable item
+        //send.click();
     }
 
     //select items from checkbox and radio button
@@ -99,4 +106,26 @@ public class BrowserInteractions {
         System.out.println("accessibleName value is : " + accessibleName);
         System.out.println("role value is : " + role);
     }
+
+    //make right click and double click on element
+    public static void rightDoubleClick() {
+        WebElement item = driver.findElement(By.cssSelector(".btn-primary"));
+        actions.doubleClick(item).perform();
+        actions.contextClick(item).perform(); //to make right click
+    }
+
+    //move to element without any action
+    public static void moveToElement() {
+        WebElement item = driver.findElement(By.cssSelector(".trigger"));
+        actions.moveToElement(item).perform();
+    }
+
+    //to drag and drop from element to another element
+    public static void dragAndDrop() {
+        WebElement source = driver.findElement(By.id("draggable-1"));
+        WebElement destination = driver.findElement(By.cssSelector(".example-dropzone"));
+        actions.dragAndDrop(source, destination).perform();
+        actions.clickAndHold(source).moveToElement(destination).release().build().perform();
+    }
+
 }
