@@ -1,4 +1,4 @@
-package advanced;
+package basics;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
@@ -7,6 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
+import java.util.Set;
 
 public class BrowserInteractions {
     public static WebDriver driver;
@@ -20,7 +21,7 @@ public class BrowserInteractions {
         actions = new Actions(driver); //to define actions
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); //to wait 5 seconds for searching element
-        driver.get("file://D:\\work\\Automation\\SiteProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
+        driver.get("file://D:\\IntellijProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
         sendAndClick();
         selectCheckBox();
         selectDropdown();
@@ -31,6 +32,7 @@ public class BrowserInteractions {
         rightDoubleClick();
         moveToElement();
         dragAndDrop();
+        handleWindow();
         Thread.sleep(5000); //to wait 5 seconds before quit
         driver.quit();
     }
@@ -107,7 +109,7 @@ public class BrowserInteractions {
         System.out.println("role value is : " + role);
     }
 
-    //make right click and double click on element
+    //make right click and double-click on element
     public static void rightDoubleClick() {
         WebElement item = driver.findElement(By.cssSelector(".btn-primary"));
         actions.doubleClick(item).perform();
@@ -128,4 +130,22 @@ public class BrowserInteractions {
         actions.clickAndHold(source).moveToElement(destination).release().build().perform();
     }
 
+    //handle multiple window
+    public static void handleWindow() {
+        driver.get("https://the-internet.herokuapp.com/abtest");
+        String parentTab = driver.getWindowHandle(); //to get parent window tab id
+        System.out.println("parent tab id is : " + parentTab);
+        WebElement aboutPage = driver.findElement(By.linkText("Elemental Selenium"));
+        aboutPage.click();
+        Set<String> allTabsId = driver.getWindowHandles(); //to get list of window tab ids
+        System.out.println("all tab ids are : " + allTabsId); //to get list of window tab ids
+        for (String window : allTabsId) {
+            if (!window.equalsIgnoreCase(parentTab)) { //to ignore upper case
+                driver.switchTo().window(window);
+                System.out.println("title of new page is : " + driver.getTitle());
+                driver.close(); //to close the new tab only
+            }
+        }
+        driver.switchTo().window(parentTab); //to return to parent window
+    }
 }
