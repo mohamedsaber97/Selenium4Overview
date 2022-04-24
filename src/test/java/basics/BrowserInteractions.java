@@ -13,6 +13,7 @@ public class BrowserInteractions {
     public static WebDriver driver;
     public static JavascriptExecutor js;
     public static Actions actions;
+    public static String baseUrl = "https://the-internet.herokuapp.com/";
 
     public static void main(String[] args) throws InterruptedException {
         WebDriverManager.edgedriver().setup();
@@ -21,7 +22,6 @@ public class BrowserInteractions {
         actions = new Actions(driver); //to define actions
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); //to wait 5 seconds for searching element
-        driver.get("file://D:\\IntellijProjects\\Selenium4Overview\\src\\test\\resources\\index.html");
         sendAndClick();
         selectCheckBox();
         selectDropdown();
@@ -33,72 +33,75 @@ public class BrowserInteractions {
         moveToElement();
         dragAndDrop();
         handleWindow();
-        Thread.sleep(5000); //to wait 5 seconds before quit
+        Thread.sleep(3000); //to wait 5 seconds before quit
         driver.quit();
     }
 
     //send data in fields and click
-    public static void sendAndClick() throws InterruptedException {
-        WebElement email = driver.findElement(By.id("inputEmail"));
-        email.sendKeys("msaber9765@gmail.com");
-        WebElement password = driver.findElement(By.id("inputPassword"));
+    public static void sendAndClick() {
+        driver.get(baseUrl + "login");
+        WebElement username = driver.findElement(By.id("username"));
+        username.sendKeys("mohamed saber");
+        WebElement password = driver.findElement(By.id("password"));
         password.sendKeys("123456");
-        WebElement check = driver.findElement(By.xpath("//*[@value='remember-me']"));
-        js.executeScript("arguments[0].click();", check);
-        Thread.sleep(5000);
-        WebElement send = driver.findElement(By.xpath("//*[text() = 'Sign in']"));
-        js.executeScript("arguments[0].click();", send); //to click on un clickable item
-        //send.click();
+        WebElement login = driver.findElement(By.xpath("//*[@type = 'submit']"));
+        login.click();
+        //js.executeScript("arguments[0].click();", login); //to click on un clickable item
     }
 
     //select items from checkbox and radio button
     public static void selectCheckBox() {
-        js.executeScript("window.scrollBy(0,-2500)", ""); //to scroll up to item
-        WebElement item = driver.findElement(By.id("Banana"));
-        js.executeScript("arguments[0].click();", item);
+        driver.get(baseUrl + "checkboxes");
+        WebElement item = driver.findElement(By.xpath("//*[text() = ' checkbox 1']"));
+        item.click();
     }
 
     //select items from dropdown with select and options tags
     public static void selectDropdown() {
-        WebElement item = driver.findElement(By.id("courses"));  //define select tag
+        driver.get(baseUrl + "dropdown");
+        WebElement item = driver.findElement(By.id("dropdown"));  //define select tag
         Select dropdown = new Select(item);
         dropdown.selectByIndex(0);
-        dropdown.selectByValue("cypress");
-        dropdown.selectByVisibleText("appium");
+        dropdown.selectByValue("1");
+        dropdown.selectByVisibleText("Option 2");
     }
 
     //check if element is displayed or not
     public static void checkDisplay() {
-        WebElement send = driver.findElement(By.xpath("//*[text() = 'Sign in']"));
-        boolean display = send.isDisplayed();
-        System.out.println(display);
+        driver.get(baseUrl + "checkboxes");
+        WebElement item = driver.findElement(By.xpath("//*[text() = ' checkbox 1']"));
+        boolean display = item.isDisplayed();
+        System.out.println("display is :  " + display);
     }
 
     //check if element is enabled to edit or not
     public static void checkEnable() {
-        WebElement email = driver.findElement(By.id("inputEmail"));
-        boolean enable = email.isEnabled();
-        System.out.println(enable);
+        driver.get(baseUrl + "login");
+        WebElement username = driver.findElement(By.id("username"));
+        boolean enable = username.isEnabled();
+        System.out.println("enable is :  " + enable);
     }
 
     //check if element is selected in checkbox or not
     public static void checkSelect() {
-        WebElement check = driver.findElement(By.xpath("//*[@value='remember-me']"));
-        boolean selected = check.isSelected();
-        System.out.println(selected);
+        driver.get(baseUrl + "checkboxes");
+        WebElement item = driver.findElement(By.xpath("//*[text() = ' checkbox 1']"));
+        boolean selected = item.isSelected();
+        System.out.println("selected is :  " + selected);
     }
 
     //get all data of element
     public static void getAllData() {
-        WebElement email = driver.findElement(By.id("inputEmail"));
-        String attribute = email.getAttribute("id");
-        String tagName = email.getTagName();
-        String cssValue = email.getCssValue("background-color"); //to get property of style css
-        Point point = email.getLocation(); //to get point of x and y
-        Dimension dimension = email.getSize(); //to get dimensions of height and width
-        Rectangle rectangle = email.getRect(); //to get point of x , y and dimensions of height , width
-        String accessibleName = email.getAccessibleName(); //to get accessibleName of field
-        String role = email.getAriaRole(); //to get type of field for example (textBox - Button)
+        driver.get(baseUrl + "login");
+        WebElement username = driver.findElement(By.id("username"));
+        String attribute = username.getAttribute("id");
+        String tagName = username.getTagName();
+        String cssValue = username.getCssValue("background-color"); //to get property of style css
+        Point point = username.getLocation(); //to get point of x and y
+        Dimension dimension = username.getSize(); //to get dimensions of height and width
+        Rectangle rectangle = username.getRect(); //to get point of x , y and dimensions of height , width
+        String accessibleName = username.getAccessibleName(); //to get accessibleName of field
+        String role = username.getAriaRole(); //to get type of field for example (textBox - Button)
         System.out.println("attribute value is : " + attribute);
         System.out.println("tagName value is : " + tagName);
         System.out.println("cssValue value is : " + cssValue);
@@ -111,32 +114,35 @@ public class BrowserInteractions {
 
     //make right click and double-click on element
     public static void rightDoubleClick() {
-        WebElement item = driver.findElement(By.cssSelector(".btn-primary"));
+        driver.get(baseUrl + "add_remove_elements/");
+        WebElement item = driver.findElement(By.xpath("//*[text() = 'Add Element']"));
         actions.doubleClick(item).perform();
         actions.contextClick(item).perform(); //to make right click
     }
 
-    //move to element without any action
+    //move to element with mouse only without any action
     public static void moveToElement() {
-        WebElement item = driver.findElement(By.cssSelector(".trigger"));
+        driver.get(baseUrl + "hovers");
+        WebElement item = driver.findElement(By.xpath("//*[@alt = 'User Avatar']"));
         actions.moveToElement(item).perform();
     }
 
     //to drag and drop from element to another element
     public static void dragAndDrop() {
-        WebElement source = driver.findElement(By.id("draggable-1"));
-        WebElement destination = driver.findElement(By.cssSelector(".example-dropzone"));
+        driver.get(baseUrl + "drag_and_drop");
+        WebElement source = driver.findElement(By.id("column-a"));
+        WebElement destination = driver.findElement(By.id("column-b"));
         actions.dragAndDrop(source, destination).perform();
         actions.clickAndHold(source).moveToElement(destination).release().build().perform();
     }
 
     //handle multiple window
     public static void handleWindow() {
-        driver.get("https://the-internet.herokuapp.com/abtest");
+        driver.get(baseUrl + "windows");
         String parentTab = driver.getWindowHandle(); //to get parent window tab id
         System.out.println("parent tab id is : " + parentTab);
-        WebElement aboutPage = driver.findElement(By.linkText("Elemental Selenium"));
-        aboutPage.click();
+        WebElement newPage = driver.findElement(By.linkText("Click Here"));
+        newPage.click();
         Set<String> allTabsId = driver.getWindowHandles(); //to get list of window tab ids
         System.out.println("all tab ids are : " + allTabsId); //to get list of window tab ids
         for (String window : allTabsId) {

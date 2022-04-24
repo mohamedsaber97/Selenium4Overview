@@ -19,13 +19,13 @@ public class VisitingSites {
         getCurrentUrl();
         getTitle();
         getPageSource();
-        getClose();
+        closeAndQuit();
         getNavigation();
     }
 
     //open any web page with url
     public static void getPage() {
-        driver.get("https://qacart.com");
+        driver.get("https://the-internet.herokuapp.com/");
         driver.quit();
     }
 
@@ -45,7 +45,7 @@ public class VisitingSites {
 
     //get current url of page
     public static void getCurrentUrl() {
-        driver.get("https://www.selenium.dev/documentation/");
+        driver.get("https://the-internet.herokuapp.com/");
         String url = driver.getCurrentUrl();
         System.out.println("The current url is : " + url);
         driver.quit();
@@ -53,7 +53,7 @@ public class VisitingSites {
 
     //get title of page
     public static void getTitle() {
-        driver.get("https://www.selenium.dev/documentation/");
+        driver.get("https://the-internet.herokuapp.com/");
         String title = driver.getTitle();
         System.out.println("The title is : " + title);
         driver.quit();
@@ -61,15 +61,15 @@ public class VisitingSites {
 
     //get page source of page
     public static void getPageSource() {
-        driver.get("https://www.selenium.dev/documentation/");
+        driver.get("https://the-internet.herokuapp.com/");
         String pageSource = driver.getPageSource();
         System.out.println("The page source is : " + pageSource);
         driver.quit();
     }
 
     //close page
-    public static void getClose() {
-        driver.get("https://www.selenium.dev/documentation/");
+    public static void closeAndQuit() {
+        driver.get("https://the-internet.herokuapp.com/");
         driver.close(); // close first window only
         driver.quit(); // close all windows and tabs
     }
@@ -77,7 +77,7 @@ public class VisitingSites {
     //navigation methods
     public static void getNavigation() {
         driver.get("https://www.google.com");
-        driver.navigate().to("https://www.selenium.dev/documentation/");
+        driver.navigate().to("https://the-internet.herokuapp.com/");
         driver.navigate().back();
         driver.navigate().forward();
         driver.navigate().refresh();
