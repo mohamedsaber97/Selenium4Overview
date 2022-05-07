@@ -21,7 +21,7 @@ public class BrowserInteractions {
         js = (JavascriptExecutor) driver; //to define java script executor
         actions = new Actions(driver); //to define actions
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); //to wait 5 seconds for searching element
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         sendAndClick();
         selectCheckBox();
         selectDropdown();
@@ -33,7 +33,7 @@ public class BrowserInteractions {
         moveToElement();
         dragAndDrop();
         handleWindow();
-        Thread.sleep(3000); //to wait 5 seconds before quit
+        Thread.sleep(3000);
         driver.quit();
     }
 
