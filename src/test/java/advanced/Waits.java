@@ -40,9 +40,9 @@ public class Waits {
 
     /* implicitlyWait
      * it will try to find element for specified time but if it finds element before specified time , it will stop waiting and complete execution
-     * it is defined one time after opening page and it will available for all elements in page (global for all elements)
+     * it is defined one time after opening page, and it will be available for all elements in page (global for all elements)
      --disadvantages
-     * it waits until element appears only but it can’t check if element is visible or enabled or hidden or clickable or not
+     * it waits until element appears only, but it can’t check if element is visible or enabled or hidden or clickable or not
      * it can’t deal with covered elements and return error
      */
     //wait using implicitlyWait
