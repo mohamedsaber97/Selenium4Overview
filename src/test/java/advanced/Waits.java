@@ -27,7 +27,7 @@ public class Waits {
     /* thread.sleep
      * wait specified time before finding elements
      --disadvantages
-     * You must wait for the specified time even if the item appears before the specified time
+     * You must wait for the specified time even if the item appears before the specified time,
      * so it takes more time in execution
      * it is defined for only one element (local for element)
      */
@@ -67,7 +67,7 @@ public class Waits {
     }
 
     /* note
-     * don’t mix using implicitlyWait and explicitWait because it causer errors
+     * don’t mix using implicitlyWait and explicitWait because it causes errors
      */
 
 }
