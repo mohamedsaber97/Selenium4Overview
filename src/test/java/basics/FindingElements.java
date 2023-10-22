@@ -70,6 +70,7 @@ public class FindingElements {
      * Absolute xpath :  "//parent tagName/subParent tagName/child tagName"
      * Xpath by contains :  "//*[contains(@attribute , 'part of text')]"
      * Xpath by text :  "//*[text() = 'text']"
+     * to test value in web console $x("value")
      */
     //to access element by xpath
     public static void getByXpath() {
@@ -93,6 +94,7 @@ public class FindingElements {
      * "[attribute="value"]"
      * ".className li:nth-of-type(index)"  //to access element index in list : index start with 1
      * "parent child"  or "parent > child" //to access child element from parent  ">": means direct parent
+     * to test value in web console $$("value")
      */
     //to access element by css
     public static void getByCssSelector() {
